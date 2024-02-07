@@ -1,0 +1,9 @@
+
+.youtube-container {
+    aspect-ratio: 16/9;
+}
+
+.image169 {
+    aspect-ratio: 16/9;
+    object-fit: cover;
+}
