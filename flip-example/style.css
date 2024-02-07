@@ -1,0 +1,9 @@
+.yt-item {
+  transform-origin: top left;
+}
+.yt-item.front {
+  position: fixed;
+  top: 10%;
+  left: 20%;
+  width: 60%;
+}

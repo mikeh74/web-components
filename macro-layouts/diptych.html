@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+
+  <style>
+    /*** The new CSS Reset - version 1.2.0 (last updated 23.7.2021) ***/
+
+    /* Remove all the styles of the "User-Agent-Stylesheet", except for the 'display' property */
+    *:where(:not(iframe, canvas, img, svg, video):not(svg *)) {
+      all: unset;
+      display: revert;
+    }
+
+    /* Preferred box-sizing value */
+    *,
+    *::before,
+    *::after {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+      box-sizing: border-box;
+    }
+
+    /*
+    Remove list styles (bullets/numbers)
+    in case you use it with normalize.css
+    */
+    ol,
+    ul {
+      list-style: none;
+    }
+
+    /* For images to not be able to exceed their container */
+    img {
+      max-width: 100%;
+    }
+
+    /* Removes spacing between cells in tables */
+    table {
+      border-collapse: collapse;
+    }
+
+    /* Revert the 'white-space' property for textarea elements on Safari */
+    textarea {
+      white-space: revert;
+    }
+
+    .parent {
+      display: grid;
+      grid-template: auto 1fr auto / auto 1fr;
+    }
+
+    header {
+      background-color: beige;
+      padding: 2rem;
+      grid-column: 1 / 4;
+    }
+
+    .left-side {
+      min-width: 20vw;
+      background-color: lightcyan;
+      padding: 2rem;
+      grid-column: 1 / 2;
+    }
+
+    main {
+      background-color: rgb(235, 235, 235);
+      padding: 2rem;
+      grid-column: 2 / 3;
+    }
+
+    footer {
+      background-color: beige;
+      grid-column: 1 / 4;
+      padding: 2rem;
+    }
+
+    .left-side, main {
+      min-height: 80vh;
+    }
+
+    p, h1 {
+      padding-bottom: 1rem;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      font-weight: bold;
+    }
+
+  </style>
+
+</head>
+
+<body>
+  <div class="parent">
+    <header class="section">Header</header>
+    <div class="left-side section">Left Sidebar</div>
+    <main class="section"><h1>Main Content</h1></main>
+    <footer class="section">Footer</footer>
+  </div>
+</body>
+
+</html>

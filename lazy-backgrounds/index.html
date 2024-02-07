@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Example of section with lazy loaded background image</title>
+
+  <link rel="preload" href="./img6.jpg" />
+
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: sans-serif;
+    }
+
+    section {
+      width: 100%;
+      aspect-ratio: 21/9;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .lazy-background {
+      background-size: cover;
+      background-position: center;
+      width: 100%;
+      aspect-ratio: 21/9;
+    }
+
+    .lazy-background::before {
+      background-color: hsl(182 25% 50% / 1);
+      content: '';
+      position: absolute;
+      width: 100%;
+      aspect-ratio: 21/9;
+    }
+
+    .lazy-background.lazy-background--fade-in::before {
+      background-color: hsla(182, 25%, 50%, 0);
+      transition: background-color 1s ease-in-out;
+    }
+
+    .section-content {
+      color: white;
+      z-index: 1;
+      margin: 1rem;
+    }
+  </style>
+
+</head>
+
+<body>
+
+  <section class="lazy-background" data-background="./img6.jpg">
+    <div class="section-content">
+      <h1>Lazy loaded background image</h1>
+      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.</p>
+    </div>
+  </section>
+
+  <script>
+
+    // Lazy load background images
+    // Could tie this to requestIdleCallback() to make it more performant
+
+    const loadLazyBackgrounds = function () {
+      const lazyBackgrounds = document.querySelectorAll('.lazy-background');
+
+      lazyBackgrounds.forEach(element => {
+        const imageToLoad = element.getAttribute('data-background');
+        const image = new Image();
+        image.src = imageToLoad;
+        image.onload = () => {
+          element.style.backgroundImage = `url(${imageToLoad})`;
+          element.classList.add('lazy-background--fade-in');
+        }
+      });
+    }
+
+    //check if requestIdleCallback is supported
+    if ('requestIdleCallback' in window) {
+      window.requestIdleCallback(
+        loadLazyBackgrounds, {
+        timeout: 1000
+      });
+      console.log('requestIdleCallback is supported');
+    } else {
+      window.addEventListener('load', loadLazyBackgrounds);
+      console.log('requestIdleCallback is not supported');
+    }
+
+  </script>
+
+</body>
+
+</html>

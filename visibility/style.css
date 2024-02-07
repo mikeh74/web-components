@@ -1,0 +1,20 @@
+/** two classes to show and hide the element using opacity, zindex and visibility */
+
+.box {
+  width: 350px;
+  height: 350px;
+  background-color: cadetblue;
+  opacity: 0;
+  z-index: -999;
+  /* visibility: hidden; */
+  transition: opacity 0.5s ease-in-out;
+  position: absolute;
+}
+
+.show {
+  opacity: 1;
+  z-index: 999;
+  /* visibility: visible; */
+  transition: opacity 0.5s ease-in-out;
+  position: relative;
+}

@@ -1,0 +1,42 @@
+.wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.holder {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  width: 60%;
+  justify-content: space-evenly;
+}
+
+.result {
+  will-change: opacity;
+  display: block;
+  opacity: 0;
+  pointer-events: none;
+  width: 200px;
+  height: 100px;
+  background-color: rgb(0, 128, 0);
+  margin: 1rem;
+  transition: opacity .3s ease-in-out;
+}
+
+.show {
+  opacity: 1;
+  pointer-events: initial;
+}
+
+.toggle {
+  position: absolute;
+  top: 2rem;
+  left: 2rem;
+  padding: 1rem;
+}

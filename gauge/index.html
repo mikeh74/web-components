@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+  <title>SVG Gauge prototype</title>
+
+  <!-- Bootstrap -->
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+    integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+  <style>
+    .gauge-inner {
+      stroke: #9468bd;
+      fill: transparent;
+      stroke-dasharray: 0 314.2;
+      transition: all ease-out 1s;
+    }
+
+    .gauge-inner-grow {
+      /* 252 is 100% */
+      stroke-dasharray: 200 314.2;
+    }
+
+    .gauge-cover {
+      stroke-dasharray: 62 314.2;
+      transition: all ease-out 1s;
+      stroke: white;
+    }
+
+    .gauge-outer {
+      display: block;
+      position: relative;
+      max-width: 250px;
+      margin: auto;
+    }
+
+    .gauge-wrapper {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+    }
+
+    .gauge-box {
+      display: flex;
+      width: 100%;
+      height: 100%;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .gauge-text {
+      font-size: 3rem;
+    }
+  </style>
+
+</head>
+
+<body>
+
+  <div class="container">
+
+    <div class="row" style="height:150vh">
+
+    </div>
+
+    <div class="row">
+
+      <div class="col-sm-4"></div>
+
+      <div class="col-sm-4">
+
+        <div id="gauge" class="gauge-outer" data-value="75">
+
+          <svg viewbox="0 0 200 200">
+            <circle r="100" cx="100" cy="100" fill="#f1f1f1" />
+            <circle id="gauge-animated" class="gauge-inner" 
+              r="50" cx="100" cy="100" transform="rotate(126, 100, 100)"
+              stroke-width="100" />
+            <circle class="gauge-cover" r="50" cx="100" cy="100"
+              stroke-width="100" transform="rotate(55, 100, 100)" />
+            <circle r="85" cx="100" cy="100" fill="white" />
+          </svg>
+
+          <div class="gauge-wrapper" style="position:absolute">
+            <div class="gauge-box">
+              <div class="gauge-text">
+                <p>80%</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="./gauge.js"></script>
+
+</body>
+
+</html>

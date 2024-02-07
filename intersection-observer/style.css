@@ -1,0 +1,33 @@
+
+body {
+  transition: all 0.2s cubic-bezier(0.39, 0.575, 0.565, 1);
+}
+
+body.has-sticky {
+  background-color: darkcyan;
+}
+
+.box {
+  width: 80vw;
+  background-color: cadetblue;
+  height: 300px;
+  margin: 1rem;
+}
+
+.sticky-top {
+  background-color: lightslategrey;
+  height: 100px;
+  position: sticky;
+  top: 0;
+}
+
+.flexgrid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.flexgrid .item {
+  background-color: bisque;
+  flex: 1 0 30%;
+}

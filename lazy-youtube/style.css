@@ -1,0 +1,24 @@
+
+.image16by9::before {
+  padding-top: 56.25%;
+}
+
+iframe.image16by9 {
+  max-height: 100%;
+}
+
+.image16by9 {
+  max-width: 100%;
+}
+
+.wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.grid-item {
+  max-width: 800px;
+  flex-basis: 50%;
+}

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <div class="youtube-wrapper">
+        <a role="button" class="youtube-container"
+        data-youtube-id="{{ instance.youtube_id }}"
+                    data-youtube-modal="true"
+                    href="#" id="youtube-{{ instance.id }}">
+                    <div class="embed-responsive embed-responsive-16by9">
+                      <img class="embed-responsive-item ytImg-{{ instance.id }}"
+                        alt="Click to play embedded youtube video"
+                        src="">
+                    </div>
+                  </a>
+      </div>
+
+      <script src="index.js"></script>
+</body>
+</html>

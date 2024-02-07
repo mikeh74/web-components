@@ -1,0 +1,37 @@
+    /*** RESET ***/
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    /***
+    
+    All box elements have height of 200vh and width of 100vw.
+    Box colours are green getting progressively darker.
+    
+    ***/
+
+    .box1 {
+      background-color: #00ff00;
+      height: 200vh;
+      width: 100vw;
+    }
+
+    .box2 {
+      background-color: #00cc00;
+      height: 200vh;
+      width: 100vw;
+    }
+
+    .box3 {
+      background-color: #009900;
+      height: 200vh;
+      width: 100vw;
+    }
+
+    .box4 {
+      background-color: #006600;
+      height: 200vh;
+      width: 100vw;
+    }
