@@ -5,15 +5,12 @@
  * element, checking if the YouTube API is needed for autoplay, and setting up
  * the YouTube player.
  *
- * This follows the embed facade patterns recommended on the web.dev site
- *
  * It takes a lot of inspiration (and code) from the Paul Irish component:
  * https://github.com/paulirish/lite-youtube-embed/tree/master
  *
  * But due to other requirements we have rewritten this so it is a library that
- * you can attach to exists elements via data attributes
+ * you can attach to existing elements via data attributes
  *
- * @see {@link https://web.dev/embedding-modern-media/}
  * @see {@link https://developer.chrome.com/docs/lighthouse/performance/third-party-facades/}
  * @see {@link https://github.com/paulirish/lite-youtube-embed/tree/master}
  *
@@ -46,7 +43,6 @@ const addPrefetch = function (kind, url, as) {
   }
   document.head.append(linkEl);
 }
-
 
 /**
  * Warms up the connections by preconnecting to essential domains.
@@ -150,7 +146,8 @@ const needsYTApiForAutoplay = () => navigator.vendor.includes('Apple') || naviga
  * @param {URLSearchParams} initparams - The URLSearchParams object containing the parameters for the iframe.
  * @returns {Promise} - A promise that resolves when the iframe is added.
  */
-async function addIframe(targetEl, youtubeId, initparams) {
+async function addIframe(targetEl, youtubeId, initparams, title) {
+  // if it's already active then we don't need to do anything
   if (targetEl.classList.contains('youtube-activated')) return;
   targetEl.classList.add('youtube-activated');
 
@@ -160,14 +157,17 @@ async function addIframe(targetEl, youtubeId, initparams) {
 
   if (needsYTApiForAutoplay()) {
     targetEl.innerHTML = '';
-    return addYTPlayerIframe(targetEl, params, youtubeId);
+    return addYTPlayerIframe(targetEl, params, youtubeId, title);
   }
 
   const iframeEl = document.createElement('iframe');
-  // iframeEl.classList.add('youtube-iframe');
+  iframeEl.classList.add('youtube-iframe');
 
-  // No encoding necessary as [title] is safe. https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html#:~:text=Safe%20HTML%20Attributes%20include
-  // iframeEl.title = .getAttribute('data-youtube-el-title');
+  // No encoding necessary as [title] is safe.
+  // https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html#:~:text=Safe%20HTML%20Attributes%20include
+  if (title) {
+    iframeEl.title = title;
+  }
   iframeEl.allow = 'accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture';
   iframeEl.allowFullscreen = true;
 
@@ -193,9 +193,11 @@ export default function youtubeSetup(selector, youtubeModalElement) {
   // if we don't have a selector then set a default
   youtubeModalElement = youtubeModalElement || '.youtube-modal-container'
 
-  // For bootstrap 4 to remove the youtube element when the 
+  // For bootstrap 4 to remove the youtube element when the
   $(youtubeModalElement).on('hidden.bs.modal', function () {
-    document.getElementById('youtube-modal').innerHTML = '';
+    let youtubeModal = document.getElementById('youtube-modal');
+    youtubeModal.innerHTML = '';
+    youtubeModal.classList.remove('youtube-activated');
   });
 
   const els = document.querySelectorAll(selector);
@@ -215,10 +217,12 @@ export default function youtubeSetup(selector, youtubeModalElement) {
 
     /**
      * Warm connections.
-     * We only need to do this if we're loading the full API though?
+     * We only need to do this if we're loading the full API though
      */
-    el.addEventListener('mouseenter', function () {
-      warmConnections();
-    }, { once: true });
+    if (needsYTApiForAutoplay()) {
+      el.addEventListener('mouseenter', function () {
+        warmConnections();
+      }, { once: true });
+    };
   });
 };
