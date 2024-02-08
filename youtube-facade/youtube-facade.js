@@ -34,7 +34,7 @@
  * @param {string} url - The URL of the linked resource.
  * @param {string} [as] - The type of the linked resource.
  */
-const addPrefetch = function (kind, url, as) {
+const addPrefetch = function(kind, url, as) {
   const linkEl = document.createElement('link');
   linkEl.rel = kind;
   linkEl.href = url;
@@ -48,10 +48,10 @@ const addPrefetch = function (kind, url, as) {
  * Warms up the connections by preconnecting to essential domains.
  * @returns {Function} - A function that preconnects to essential domains.
  */
-const warmConnections = function () {
+const warmConnections = function() {
   let preconnected = false;
 
-  return function () {
+  return function() {
     if (preconnected) return;
     addPrefetch('preconnect', 'https://www.youtube-nocookie.com');
     addPrefetch('preconnect', 'https://www.google.com');
@@ -70,10 +70,10 @@ const warmConnections = function () {
  *
  * @returns {Promise} - A promise that resolves when the script is loaded.
  */
-const youtubeScriptLoad = function () {
+const youtubeScriptLoad = function() {
   let awaitingResponse = null;
 
-  return function () {
+  return function() {
     // don't load if we already have global YT object
     if (window.YT || (window.YT && window.YT.Player)) {
       return Promise.resolve(console.log('already loaded'));
@@ -203,19 +203,19 @@ export default function youtubeSetup(selector, targetElementId) {
 
   const els = document.querySelectorAll(selector);
   els.forEach((el) => {
-    el.addEventListener('click', function () {
+    el.addEventListener('click', function() {
       if (el.getAttribute('data-youtube-id')) {
         if (el.getAttribute('data-youtube-modal')) {
           const target = document.getElementById(targetElementId);
           addYoutubeIframe(
-            target,
-            el.getAttribute('data-youtube-id'),
-            el.getAttribute('data-youtube-title'),
+              target,
+              el.getAttribute('data-youtube-id'),
+              el.getAttribute('data-youtube-title'),
           );
         } else {
           addYoutubeIframe(
-            el, el.getAttribute('data-youtube-id'),
-            el.getAttribute('data-youtube-title'),
+              el, el.getAttribute('data-youtube-id'),
+              el.getAttribute('data-youtube-title'),
           );
         };
       };
@@ -226,9 +226,9 @@ export default function youtubeSetup(selector, targetElementId) {
      * We only need to do this if we're loading the full API though
      */
     if (needsYTApiForAutoplay()) {
-      el.addEventListener('mouseenter', function () {
+      el.addEventListener('mouseenter', function() {
         warmConnections();
-      }, { once: true });
+      }, {once: true});
     };
   });
 };
