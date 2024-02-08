@@ -27,7 +27,7 @@
  */
 
 /**
- * Adds a prefetch link to the document head.
+ * Utility function - Adds a prefetch link to the document head.
  * Add a <link rel={preload | preconnect} ...> to the head
  * 
  * @param {string} kind - The relationship between the current document and the linked resource.
@@ -183,18 +183,23 @@ async function addIframe(targetEl, youtubeId, initparams, title) {
 };
 
 /**
- * Setup the youtube player.
- *
+ * Setup the youtube player. This is the entry point for using this
+ * module.
+ * 
+ * Here is an example of importing and using the script
+ * 
+ 
  * @param {string} selector - The selector for the youtube elements.
- * @param {string} [youtubeModalElement] - The selector for the youtube modal element.
+ * @param {string} [targetElementSelector] - The selector for the youtube modal element.
  */
-export default function youtubeSetup(selector, youtubeModalElement) {
+export default function youtubeSetup(selector, targetElementSelector) {
 
   // if we don't have a selector then set a default
-  youtubeModalElement = youtubeModalElement || '.youtube-modal-container'
+  targetElementSelector = targetElementSelector || '.youtube-modal-container'
 
-  // For bootstrap 4 to remove the youtube element when the
-  $(youtubeModalElement).on('hidden.bs.modal', function () {
+  // For bootstrap 4 to remove the youtube element when the modal is closed
+  // we also remove youtube-activated from the class list
+  $(targetElementSelector).on('hidden.bs.modal', function () {
     let youtubeModal = document.getElementById('youtube-modal');
     youtubeModal.innerHTML = '';
     youtubeModal.classList.remove('youtube-activated');
@@ -207,7 +212,7 @@ export default function youtubeSetup(selector, youtubeModalElement) {
 
         if (el.getAttribute('data-youtube-modal')) {
           let target = document.getElementById('youtube-modal');
-          $(youtubeModalElement).modal();
+          $(targetElementSelector).modal();
           addIframe(target, el.getAttribute('data-youtube-id'));
         } else {
           addIframe(el, el.getAttribute('data-youtube-id'));
