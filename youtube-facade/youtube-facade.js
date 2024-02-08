@@ -149,7 +149,7 @@ const needsYTApiForAutoplay = () => navigator.vendor.includes('Apple') || naviga
  * @param {string} title
  * @return {Promise} - A promise that resolves when the iframe is added.
  */
-async function addYoutubeIframe(targetEl, youtubeId, initparams, title) {
+async function addYoutubeIframe(targetEl, youtubeId, title, initparams) {
   // if it's already active then we don't need to do anything
   if (targetEl.classList.contains('youtube-activated')) return;
   targetEl.classList.add('youtube-activated');
@@ -195,7 +195,7 @@ async function addYoutubeIframe(targetEl, youtubeId, initparams, title) {
  *
  * @param {string} selector - The selector for the youtube elements.
  * @param {string} [targetElementId] - The selector for the youtube
- *  modal element.
+ *  element inside the modal.
  */
 export default function youtubeSetup(selector, targetElementId) {
   // if we don't have an id string selector then set a default
@@ -207,9 +207,16 @@ export default function youtubeSetup(selector, targetElementId) {
       if (el.getAttribute('data-youtube-id')) {
         if (el.getAttribute('data-youtube-modal')) {
           const target = document.getElementById(targetElementId);
-          addYoutubeIframe(target, el.getAttribute('data-youtube-id'));
+          addYoutubeIframe(
+            target,
+            el.getAttribute('data-youtube-id'),
+            el.getAttribute('data-youtube-title'),
+          );
         } else {
-          addYoutubeIframe(el, el.getAttribute('data-youtube-id'));
+          addYoutubeIframe(
+            el, el.getAttribute('data-youtube-id'),
+            el.getAttribute('data-youtube-title'),
+          );
         };
       };
     });
