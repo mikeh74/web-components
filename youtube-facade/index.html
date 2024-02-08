@@ -16,20 +16,26 @@
 </head>
 
 <body>
+
   <h1>Youtube facade</h1>
 
-  <div id="holder" class="youtube-container" data-youtube-id="X1sL0zQ6bSg">
-    <p>This is a holder</p>
-    <img class="d-block w-50 image169" src="https://img.youtube.com/vi/X1sL0zQ6bSg/default.jpg" data-youtube-modal=true
-      alt="">
+  <div class="container">
+    <div class="row">
+      <div class="col-12 col-md-6">
+        <div id="holder" class="youtube-container" data-youtube-id="X1sL0zQ6bSg">
+          <img class="d-block image169 w-100" src="https://img.youtube.com/vi/X1sL0zQ6bSg/default.jpg" data-youtube-modal=true
+            alt="">
+        </div>
+      </div>
+    </div>
   </div>
 
   <button type="button" class="btn btn-primary"
     data-youtube-id="X1sL0zQ6bSg" data-youtube-modal="true"
-    data-toggle="modal" data-target=".bd-example-modal-lg">Large
+    data-toggle="modal" data-target=".youtube-modal-container">Large
     modal</button>
 
-  <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+  <div class="modal fade youtube-modal-container" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
     aria-hidden="true">
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
@@ -43,14 +49,14 @@
   <div class="container">
     <h1>Youtube player - Lazy load (prototype)</h1>
     <img class="d-block w-50" src="https://img.youtube.com/vi/X1sL0zQ6bSg/0.jpg" data-youtube-id="X1sL0zQ6bSg"
-      data-youtube-modal=true alt="">
+      data-youtube-modal="true" alt="">
   </div>
 
   <div style="min-height: 150vh;"></div>
 
   <div class="container">
     <h1>Youtube player - Lazy load (prototype)</h1>
-    <div class="" data-youtube-id="EvOHAXq2UcQ" data-youtube-modal=true>
+    <div class="" data-youtube-id="EvOHAXq2UcQ" data-youtube-modal="true">
       <img class="d-block w-75" src="https://img.youtube.com/vi/EvOHAXq2UcQ/0.jpg" alt="">
     </div>
   </div>
@@ -60,7 +66,7 @@
   <div class="container">
     <h1>Youtube player - Lazy load (prototype)</h1>
     <div class="youtube-container">
-      <div class="tube" data-youtube-id="XeFOMLTDY0E" data-youtube-modal=false>
+      <div class="tube" data-youtube-id="XeFOMLTDY0E" data-youtube-modal="false">
         <img id="foob" class="d-block w-50" src="https://img.youtube.com/vi/XeFOMLTDY0E/0.jpg" alt="">
       </div>
     </div>
@@ -80,16 +86,15 @@
 
   <script type="module">
 
-    import { addIframe } from "./youtube-facade.js"
+    // import { addIframe } from "./youtube-facade.js"
+    // window.addIframe = addIframe
 
-    window.addIframe = addIframe
-
-    const ytSelector = '[data-youtube-id]';
-    const ytEls = document.querySelectorAll(ytSelector);
-    if (ytEls.length > 0) {
+    // We are just testing that elements exist in the page before we load the script
+    const selector = '[data-youtube-id]';
+    const triggerElements = document.querySelectorAll(selector);
+    if (triggerElements.length > 0) {
       import("./youtube-facade.js").then(({ default: setup }) => {
-        // mod.youtubeSetup(ytSelector);
-        setup(ytSelector);
+        setup(selector);
       });
     };
   </script>

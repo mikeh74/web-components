@@ -28,6 +28,11 @@ const warmConnections = function () {
     addPrefetch('preconnect', 'https://www.youtube-nocookie.com');
     // The botguard script is fetched off from google.com
     addPrefetch('preconnect', 'https://www.google.com');
+
+    // Not certain if these ad related domains are in the critical path. Could verify with domain-specific throttling.
+    addPrefetch('preconnect', 'https://googleads.g.doubleclick.net');
+    addPrefetch('preconnect', 'https://static.doubleclick.net');
+
     preconnected = true;
   }
 }();
@@ -52,7 +57,6 @@ const youtubeScriptLoad = function () {
       el.async = true;
       el.onload = (_) => {
         YT.ready(res);
-        console.log("YT loaded");
       };
       el.onerror = rej;
       document.head.append(el);
@@ -95,17 +99,15 @@ async function addIframe(targetEl, youtubeId, initparams) {
   params.append('autoplay', '1');
   params.append('playsinline', '1');
 
-  return addYTPlayerIframe(targetEl, params);
   if (needsYTApiForAutoplay()) {
+    targetEl.innerHTML = '';
+    return addYTPlayerIframe(targetEl, params, youtubeId);
   }
-
-  console.log("Adding iframe");
 
   const iframeEl = document.createElement('iframe');
   // iframeEl.classList.add('youtube-iframe');
 
   // No encoding necessary as [title] is safe. https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html#:~:text=Safe%20HTML%20Attributes%20include
-
   // iframeEl.title = .getAttribute('data-youtube-el-title');
   iframeEl.allow = 'accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture';
   iframeEl.allowFullscreen = true;
@@ -120,12 +122,13 @@ async function addIframe(targetEl, youtubeId, initparams) {
   iframeEl.focus();
 };
 
-export { addIframe }
-export default function youtubeSetup(selector) {
-  console.log("We exported it!");
+export default function youtubeSetup(selector, youtubeModalElement) {
 
-  const youtubeModalElement = '.bd-example-modal-lg';
+  youtubeModalElement = youtubeModalElement || '.youtube-modal-container'
 
+  // const youtubeModalElement = '.youtube-modal';
+
+  // For bootstrap 4 to remove the youtube element when the 
   $(youtubeModalElement).on('hidden.bs.modal', function () {
     document.getElementById('youtube-modal').innerHTML = '';
   });
@@ -133,11 +136,9 @@ export default function youtubeSetup(selector) {
   const els = document.querySelectorAll(selector);
   els.forEach(el => {
     el.addEventListener('click', function () {
-      console.log("clicked");
-
       if (el.getAttribute('data-youtube-id')) {
 
-        if(el.getAttribute('data-youtube-modal')){
+        if (el.getAttribute('data-youtube-modal')) {
           let target = document.getElementById('youtube-modal');
           $(youtubeModalElement).modal();
           addIframe(target, el.getAttribute('data-youtube-id'));
@@ -146,5 +147,13 @@ export default function youtubeSetup(selector) {
         };
       };
     });
+
+    /**
+     * Warm connections.
+     * We only need to do this if we're loading the full API though?
+     */
+    el.addEventListener('mouseenter', function () {
+      warmConnections();
+    }, { once: true });
   });
 };
