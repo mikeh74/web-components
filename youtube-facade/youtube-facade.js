@@ -11,6 +11,14 @@
  * But due to other requirements we have rewritten this so it is a library that
  * you can attach to existing elements via data attributes
  *
+ * The following functions are only required if the browser doesn't allow
+ * autoplay with the standard iframe:
+ *  - addPrefetch
+ *  - warmConnections
+ *  - youtubeScriptLoaded
+ *  - addYTPlayerIframe
+ *  - needsYTApiForAutoplay
+ *
  * @see {@link https://developer.chrome.com/docs/lighthouse/performance/third-party-facades/}
  * @see {@link https://github.com/paulirish/lite-youtube-embed/tree/master}
  *
@@ -18,19 +26,11 @@
  */
 
 /**
- * Adds a prefetch link to the document head.
- * Add a <link rel={preload | preconnect} ...> to the head
- * 
- * @param {string} kind - The relationship between the current document and the linked resource.
- * @param {string} url - The URL of the linked resource.
- * @param {string} [as] - The type of the linked resource.
- */
-
-/**
  * Utility function - Adds a prefetch link to the document head.
  * Add a <link rel={preload | preconnect} ...> to the head
- * 
- * @param {string} kind - The relationship between the current document and the linked resource.
+ *
+ * @param {string} kind - The relationship between the current document and
+ *  the linked resource.
  * @param {string} url - The URL of the linked resource.
  * @param {string} [as] - The type of the linked resource.
  */
@@ -42,7 +42,7 @@ const addPrefetch = function (kind, url, as) {
     linkEl.as = as;
   }
   document.head.append(linkEl);
-}
+};
 
 /**
  * Warms up the connections by preconnecting to essential domains.
@@ -62,12 +62,12 @@ const warmConnections = function () {
     addPrefetch('preconnect', 'https://static.doubleclick.net');
 
     preconnected = true;
-  }
+  };
 }();
 
 /**
  * Load the youtube iframe API script.
- * 
+ *
  * @returns {Promise} - A promise that resolves when the script is loaded.
  */
 const youtubeScriptLoad = function () {
@@ -103,15 +103,15 @@ const youtubeScriptLoad = function () {
 
 /**
  * Add a youtube player iframe to the element.
- * 
+ *
  * @param {HTMLElement} el - The element to add the iframe to.
- * @param {URLSearchParams} params - The URLSearchParams object containing the parameters for the iframe.
+ * @param {URLSearchParams} params - The URLSearchParams object containing the
+ *  parameters for the iframe.
  * @param {string} youtubeId - The youtube video id.
  * @returns {Promise} - A promise that resolves when the iframe is added.
  */
 
 async function addYTPlayerIframe(el, params, youtubeId) {
-
   await youtubeScriptLoad();
 
   const videoPlaceholderEl = document.createElement('div');
@@ -124,29 +124,32 @@ async function addYTPlayerIframe(el, params, youtubeId) {
     videoId: youtubeId,
     playerVars: paramsObj,
     events: {
-      'onReady': event => {
+      'onReady': (event) => {
         event.target.playVideo();
-      }
-    }
+      },
+    },
   });
 };
 
 /**
  * Check if the youtube API is needed for autoplay.
- *  
- * @returns {boolean} - True if the youtube API is needed for autoplay, false otherwise.
+ *
+ * @return {boolean} - True if the youtube API is needed for autoplay,
+ *  false otherwise.
  */
-const needsYTApiForAutoplay = () => navigator.vendor.includes('Apple') || navigator.userAgent.includes('Mobi')
+const needsYTApiForAutoplay = () => navigator.vendor.includes('Apple') || navigator.userAgent.includes('Mobi');
 
 /**
  * Add an iframe to the element.
- * 
+ *
  * @param {HTMLElement} targetEl - The element to add the iframe to.
  * @param {string} youtubeId - The youtube video id.
- * @param {URLSearchParams} initparams - The URLSearchParams object containing the parameters for the iframe.
- * @returns {Promise} - A promise that resolves when the iframe is added.
+ * @param {URLSearchParams} initparams - The URLSearchParams object containing
+ *  the parameters for the iframe.
+ * @param {string} title
+ * @return {Promise} - A promise that resolves when the iframe is added.
  */
-async function addIframe(targetEl, youtubeId, initparams, title) {
+async function addYoutubeIframe(targetEl, youtubeId, initparams, title) {
   // if it's already active then we don't need to do anything
   if (targetEl.classList.contains('youtube-activated')) return;
   targetEl.classList.add('youtube-activated');
@@ -154,6 +157,7 @@ async function addIframe(targetEl, youtubeId, initparams, title) {
   const params = new URLSearchParams(initparams || []);
   params.append('autoplay', '1');
   params.append('playsinline', '1');
+  params.append('rel', '0');
 
   if (needsYTApiForAutoplay()) {
     targetEl.innerHTML = '';
@@ -171,7 +175,8 @@ async function addIframe(targetEl, youtubeId, initparams, title) {
   iframeEl.allow = 'accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture';
   iframeEl.allowFullscreen = true;
 
-  // AFAIK, the encoding here isn't necessary for XSS, but we'll do it only because this is a URL
+  // AFAIK, the encoding here isn't necessary for XSS, but we'll do it only
+  //  because this is a URL
   // https://stackoverflow.com/q/64959723/89484
   iframeEl.src = `https://www.youtube-nocookie.com/embed/${encodeURIComponent(youtubeId)}?${params.toString()}`;
   targetEl.innerHTML = '';
@@ -185,33 +190,31 @@ async function addIframe(targetEl, youtubeId, initparams, title) {
 /**
  * Setup the youtube player. This is the entry point for using this
  * module.
- * 
+ *
  * Here is an example of importing and using the script
- * 
- 
+ *
  * @param {string} selector - The selector for the youtube elements.
- * @param {string} [targetElementSelector] - The selector for the youtube modal element.
+ * @param {string} [targetElementSelector] - The selector for the youtube
+ *  modal element.
  */
 export default function youtubeSetup(selector, targetElementSelector) {
-
   // if we don't have a selector then set a default
-  targetElementSelector = targetElementSelector || '.youtube-modal-container'
+  targetElementSelector = targetElementSelector || '.youtube-modal-container';
 
   // For bootstrap 4 to remove the youtube element when the modal is closed
   // we also remove youtube-activated from the class list
   $(targetElementSelector).on('hidden.bs.modal', function () {
-    let youtubeModal = document.getElementById('youtube-modal');
+    const youtubeModal = document.getElementById('youtube-modal');
     youtubeModal.innerHTML = '';
     youtubeModal.classList.remove('youtube-activated');
   });
 
   const els = document.querySelectorAll(selector);
-  els.forEach(el => {
+  els.forEach((el) => {
     el.addEventListener('click', function () {
       if (el.getAttribute('data-youtube-id')) {
-
         if (el.getAttribute('data-youtube-modal')) {
-          let target = document.getElementById('youtube-modal');
+          const target = document.getElementById('youtube-modal');
           $(targetElementSelector).modal();
           addIframe(target, el.getAttribute('data-youtube-id'));
         } else {
