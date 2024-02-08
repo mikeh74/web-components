@@ -64,7 +64,6 @@ const youtubeScriptLoad = function () {
   };
 }();
 
-
 async function addYTPlayerIframe(el, params, youtubeId) {
 
   await youtubeScriptLoad();
@@ -96,13 +95,14 @@ async function addIframe(targetEl, youtubeId, initparams) {
   params.append('autoplay', '1');
   params.append('playsinline', '1');
 
-  // if (needsYTApiForAutoplay()) {
-  //     return addYTPlayerIframe(targetEl, params);
-  // }
+  return addYTPlayerIframe(targetEl, params);
+  if (needsYTApiForAutoplay()) {
+  }
+
+  console.log("Adding iframe");
 
   const iframeEl = document.createElement('iframe');
-  iframeEl.width = 560;
-  iframeEl.height = 315;
+  // iframeEl.classList.add('youtube-iframe');
 
   // No encoding necessary as [title] is safe. https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html#:~:text=Safe%20HTML%20Attributes%20include
 
@@ -124,6 +124,12 @@ export { addIframe }
 export default function youtubeSetup(selector) {
   console.log("We exported it!");
 
+  const youtubeModalElement = '.bd-example-modal-lg';
+
+  $(youtubeModalElement).on('hidden.bs.modal', function () {
+    document.getElementById('youtube-modal').innerHTML = '';
+  });
+
   const els = document.querySelectorAll(selector);
   els.forEach(el => {
     el.addEventListener('click', function () {
@@ -133,7 +139,7 @@ export default function youtubeSetup(selector) {
 
         if(el.getAttribute('data-youtube-modal')){
           let target = document.getElementById('youtube-modal');
-          $('.bd-example-modal-lg').modal();
+          $(youtubeModalElement).modal();
           addIframe(target, el.getAttribute('data-youtube-id'));
         } else {
           addIframe(el, el.getAttribute('data-youtube-id'));
