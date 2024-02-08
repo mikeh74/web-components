@@ -194,31 +194,22 @@ async function addYoutubeIframe(targetEl, youtubeId, initparams, title) {
  * Here is an example of importing and using the script
  *
  * @param {string} selector - The selector for the youtube elements.
- * @param {string} [targetElementSelector] - The selector for the youtube
+ * @param {string} [targetElementId] - The selector for the youtube
  *  modal element.
  */
-export default function youtubeSetup(selector, targetElementSelector) {
-  // if we don't have a selector then set a default
-  targetElementSelector = targetElementSelector || '.youtube-modal-container';
-
-  // For bootstrap 4 to remove the youtube element when the modal is closed
-  // we also remove youtube-activated from the class list
-  $(targetElementSelector).on('hidden.bs.modal', function () {
-    const youtubeModal = document.getElementById('youtube-modal');
-    youtubeModal.innerHTML = '';
-    youtubeModal.classList.remove('youtube-activated');
-  });
+export default function youtubeSetup(selector, targetElementId) {
+  // if we don't have an id string selector then set a default
+  targetElementId = targetElementId || 'youtube-modal';
 
   const els = document.querySelectorAll(selector);
   els.forEach((el) => {
     el.addEventListener('click', function () {
       if (el.getAttribute('data-youtube-id')) {
         if (el.getAttribute('data-youtube-modal')) {
-          const target = document.getElementById('youtube-modal');
-          $(targetElementSelector).modal();
-          addIframe(target, el.getAttribute('data-youtube-id'));
+          const target = document.getElementById(targetElementId);
+          addYoutubeIframe(target, el.getAttribute('data-youtube-id'));
         } else {
-          addIframe(el, el.getAttribute('data-youtube-id'));
+          addYoutubeIframe(el, el.getAttribute('data-youtube-id'));
         };
       };
     });

@@ -56,14 +56,15 @@
   <div class="container">
     <h1>Youtube player - Lazy load (prototype)</h1>
     <img class="d-block w-50" src="https://img.youtube.com/vi/X1sL0zQ6bSg/0.jpg" data-youtube-id="X1sL0zQ6bSg"
-      data-youtube-modal="true" alt="">
+      data-youtube-modal="true" data-toggle="modal" data-target=".youtube-modal-container" alt="">
   </div>
 
   <div style="min-height: 150vh;"></div>
 
   <div class="container">
     <h1>Youtube player - Lazy load (prototype)</h1>
-    <div class="" data-youtube-id="EvOHAXq2UcQ" data-youtube-modal="true">
+    <div class="" data-youtube-id="EvOHAXq2UcQ" data-youtube-modal="true"
+      data-toggle="modal" data-target=".youtube-modal-container">
       <img class="d-block w-75" src="https://img.youtube.com/vi/EvOHAXq2UcQ/0.jpg" alt="">
     </div>
   </div>
@@ -73,7 +74,7 @@
   <div class="container">
     <h1>Youtube player - Lazy load (prototype)</h1>
     <div class="youtube-container">
-      <div class="tube" data-youtube-id="XeFOMLTDY0E" data-youtube-modal="false">
+      <div class="tube" data-youtube-id="XeFOMLTDY0E">
         <img id="foob" class="d-block w-50" src="https://img.youtube.com/vi/XeFOMLTDY0E/0.jpg" alt="">
       </div>
     </div>
@@ -92,6 +93,15 @@
     crossorigin="anonymous"></script>
 
   <script type="module">
+
+    // For bootstrap 4 to remove the youtube element when the modal is closed
+    // we also remove youtube-activated from the class list
+    // need to remove the last of these 
+    $('.youtube-modal-container').on('hidden.bs.modal', function () {
+      const youtubeModal = document.getElementById('youtube-modal');
+      youtubeModal.innerHTML = '';
+      youtubeModal.classList.remove('youtube-activated');
+    });
 
     // We are just testing that elements exist in the page before we load the script
     const selector = '[data-youtube-id]';
