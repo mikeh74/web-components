@@ -1,5 +1,4 @@
 .youtube-container {
-    aspect-ratio: 16/9;
     cursor: pointer;
 }
 
@@ -9,18 +8,21 @@
     border: none;
 }
 
-.image16by9 {
+.youtube-placeholder {
+    position: relative;
+    width: 100%;
     aspect-ratio: 16/9;
+    overflow: hidden;
     object-fit: cover;
 }
 
 .youtube-activated {
-    pointer-events: none;
-}
-
-.youtube-activated > iframe {
     pointer-events: initial;
 }
+
+/* .youtube-activated > iframe {
+    pointer-events: initial;
+} */
 
 .youtube-iframe {
     width: 100%;
