@@ -66,7 +66,8 @@ const warmConnections = function() {
 }();
 
 /**
- * Load the youtube iframe API script.
+ * Load the youtube iframe API script. This is only required for browsers
+ * where autoplay doesn't work with the regular youtube iframe.
  *
  * @returns {Promise} - A promise that resolves when the script is loaded.
  */
@@ -137,6 +138,7 @@ async function addYTPlayerIframe(el, params, youtubeId) {
  * @return {boolean} - True if the youtube API is needed for autoplay,
  *  false otherwise.
  */
+// eslint-disable-next-line max-len
 const needsYTApiForAutoplay = () => navigator.vendor.includes('Apple') || navigator.userAgent.includes('Mobi');
 
 /**
@@ -144,9 +146,9 @@ const needsYTApiForAutoplay = () => navigator.vendor.includes('Apple') || naviga
  *
  * @param {HTMLElement} targetEl - The element to add the iframe to.
  * @param {string} youtubeId - The youtube video id.
+ * @param {string} title
  * @param {URLSearchParams} initparams - The URLSearchParams object containing
  *  the parameters for the iframe.
- * @param {string} title
  * @return {Promise} - A promise that resolves when the iframe is added.
  */
 async function addYoutubeIframe(targetEl, youtubeId, title, initparams) {
@@ -172,6 +174,7 @@ async function addYoutubeIframe(targetEl, youtubeId, title, initparams) {
   if (title) {
     iframeEl.title = title;
   }
+  // eslint-disable-next-line max-len
   iframeEl.allow = 'accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture';
   iframeEl.allowFullscreen = true;
 
@@ -187,6 +190,7 @@ async function addYoutubeIframe(targetEl, youtubeId, title, initparams) {
   iframeEl.focus();
 };
 
+
 /**
  * Setup the youtube player. This is the entry point for using this
  * module.
@@ -194,17 +198,24 @@ async function addYoutubeIframe(targetEl, youtubeId, title, initparams) {
  * Here is an example of importing and using the script
  *
  * @param {string} selector - The selector for the youtube elements.
- * @param {string} [targetElementId] - The selector for the youtube
- *  element inside the modal.
+ * @param {string} [targetElementId] - The selector for the html
+ * element into which we will inject the iframe, it should have no
+ * content or content that we are happy overwrite
+ * @param {string} [modalId] - The id of the modal we are going to be
+ * showing when a user clicks on a the element
  */
 export default function youtubeSetup(selector, targetElementId) {
   // if we don't have an id string selector then set a default
-  targetElementId = targetElementId || 'youtube-modal';
+  targetElementId = targetElementId || 'yf-modal-placeholder';
 
   const els = document.querySelectorAll(selector);
   els.forEach((el) => {
-    el.addEventListener('click', function() {
+    el.addEventListener('click', function(e) {
       if (el.getAttribute('data-youtube-id')) {
+        if (!el.classList.contains('youtube-activated')) {
+          e.preventDefault();
+        }
+
         if (el.getAttribute('data-youtube-modal')) {
           const target = document.getElementById(targetElementId);
           addYoutubeIframe(

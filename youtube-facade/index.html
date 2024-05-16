@@ -42,14 +42,17 @@
     </div>
   </div>
 
-  <div class="modal fade youtube-modal-container" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+  <!-- <div class="modal fade youtube-modal-container"
+    id="yf-modal"
+    tabindex="-1" role="dialog" 
+    aria-labelledby="myLargeModalLabel"
     aria-hidden="true">
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
-        <div class="youtube-container" id="youtube-modal"></div>
+        <div id="yf-modal-placeholder" class="embed-responsive-item"></div>
       </div>
     </div>
-  </div>
+  </div> -->
 
   <div style="min-height: 150vh;"></div>
 
@@ -94,11 +97,13 @@
 
   <script type="module">
 
+    import {addModal, addModalTriggers} from './utils.js';
+
     // For bootstrap 4 to remove the youtube element when the modal is closed
     // we also remove youtube-activated from the class list
     // need to remove the last of these 
-    $('.youtube-modal-container').on('hidden.bs.modal', function () {
-      const youtubeModal = document.getElementById('youtube-modal');
+    $('#yf-modal').on('hidden.bs.modal', function () {
+      const youtubeModal = document.getElementById('yf-modal-placeholder');
       youtubeModal.innerHTML = '';
       youtubeModal.classList.remove('youtube-activated');
     });
@@ -109,6 +114,8 @@
     if (triggerElements.length > 0) {
       import("./youtube-facade.js").then(({ default: setup }) => {
         setup(selector);
+        addModalTriggers(triggerElements);
+        addModal('yf-modal', 'yf-modal-placeholder');
       });
     };
   </script>
