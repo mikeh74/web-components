@@ -49,6 +49,15 @@ body {
 
 }
 
+// .news-articles--var2 auto grid with minmax 200px and 1fr
+.news-articles--var2 {
+  margin-top: 1rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1rem;
+  grid-auto-rows: minmax(100px, auto);
+}
+
 .news-item {
   border-radius: 1rem;
   background-color: rgb(239, 242, 243);

@@ -16,10 +16,22 @@
 
     <h1>Example 12 Column using CSS Grid</h1>
 
+    <div>
+      <p>This is intended to replicated the bootstrap 12 column grid using
+        the CSS Grid. It is a simple example to show how to use the grid.
+      </p>
+      <p>It is not intended to be a full replacement for bootstrap, but
+        a simple example to show how a grid could be created.</p>
+    </div>
+
+    <div class="grid-row padding-bottom">
+      <div class="box span-12 span-md-8 section">Span 12 (small)/ Span 8 (med)</div>
+    </div>
+    <div class="grid-row padding-bottom">
+      <div class="box span-6 span-md-4 section">Span 6 (small)/ Span 4 (med)</div>
+      <div class="box span-6 span-md-4 section">Span 6 (small)/ Span 4 (med)</div>
+    </div>
     <div class="grid-row">
-      <div class="box span-12 section">Span 12</div>
-      <div class="box span-6 section">Span 6</div>
-      <div class="box span-6 section">Span 6</div>
       <div class="box span-4 section">Span 4</div>
       <div class="box span-4 section">Span 4</div>
       <div class="box span-4 section">Span 4</div>
@@ -31,11 +43,60 @@
 
       <div class="box span-4 section">Span 4</div>
       <div class="box span-8 section">Span 8</div>
-
     </div>
 
+    <h2>Code</h2>
+    <h3>CSS</h3>
+    <pre>
+
+      /**
+       * 12 Column Grid
+       */
+      .grid-row {
+        display: grid;
+        gap: 1rem;
+        grid-template-columns: repeat(12, 1fr);
+      }
+
+      .span-1 {
+        grid-column: span 1;
+      }
+      
+      .span-2 {
+        grid-column: span 2;
+      }
+      
+      .span-3 {
+        grid-column: span 3;
+      }
+
+      ...
+
+      @media screen and (min-width: 800px) {
+
+        .span-md-1 {
+          grid-column: span 1;
+        }
+        
+        .span-md-2 {
+          grid-column: span 2;
+        }
+        
+        .span-md-3 {
+          grid-column: span 3;
+        }
+        ...
+      }
+
+    </pre>
+
+    <h3>HTML</h3>
+    <pre>
+      &lt;div class="grid-row padding-bottom"&gt;
+        &lt;div class="box span-6 span-md-4 section"&gt;Span 6 (small)/ Span 4 (med)&lt;/div&gt;
+        &lt;div class="box span-6 span-md-4 section"&gt;Span 6 (small)/ Span 4 (med)&lt;/div&gt;
+      &lt;/div&gt;
+    </pre>
   </div>
-
 </body>
-
 </html>
