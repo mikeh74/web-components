@@ -30,9 +30,7 @@ body {
   aspect-ratio: 21/9;
   height: max(400px, 150%);
   top: min(-20%, -60px);
-  /* right: min(-6vw, -220px); */
   right: -240px;
-  /* right: clamp(-240px, -32vw, -350px) */
 }
 
 .lefty>* {
