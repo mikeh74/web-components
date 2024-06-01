@@ -31,7 +31,7 @@ body {
   aspect-ratio: 10/4;
   background-size: contain;
   /* height: max(22rem, 200%); */
-  height: clamp(126%, 50vh, 200%);
+  height: clamp(126%, 46vw, 200%);
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -64,4 +64,11 @@ body {
 .bg-shape--title::before {
   background: url(./assets/left-title.svg) center no-repeat;
   aspect-ratio: 5/1;
+}
+
+/* media query to check if screen is in portrait mode */
+@media (orientation: portrait) {
+  .bg-shape::before {
+    height: clamp(126%, 46vh, 200%);
+  }
 }
