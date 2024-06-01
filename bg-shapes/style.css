@@ -25,15 +25,48 @@ body {
 .lefty::before {
   content: '';
   position: absolute;
-  background: url("./shape1.webp");
-  background-size: cover;
-  aspect-ratio: 21/9;
-  height: max(400px, 150%);
+  filter: drop-shadow(0 0 10px rgba(0, 0, 0, 0.5));
+  /* background: url("./shape1.webp"); */
+  background: url(./assets/left-blue-2.svg) center no-repeat;
+  background-size: contain;
+  aspect-ratio: 10/4;
+  height: max(400px, 200%);
   top: min(-20%, -60px);
   right: -240px;
 }
 
 .lefty>* {
+  position: relative;
+  z-index: 100;
+}
+
+body {
+  background: #f06d06;
+  padding: 20px;
+}
+
+article {
+  /* background: white; */
+  /* width: 40%;
+  padding: 20px; */
+  position: relative;
+}
+
+article::before {
+  content: "";
+  position: absolute;
+  filter: drop-shadow(0 0 10px rgba(0, 0, 0, 0.5));
+  z-index: 1;
+  top: -10rem;
+  right: -15rem;
+  height: 500%;
+  width: 200%;
+  /* aspect-ratio: 10/4; */
+  background: url(./assets/left-blue-2.svg) center no-repeat;
+  background-size: contain;
+}
+
+article>* {
   position: relative;
   z-index: 100;
 }
