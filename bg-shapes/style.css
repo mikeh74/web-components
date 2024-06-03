@@ -4,8 +4,10 @@
   --tertiary: #f0f0f0;
   --quaternary: #f0f0f0;
 
-  --offset: -13rem;
-
+  --offset: -12rem;
+  --content-margin: 6rem 2rem;
+  --shape-height: min(200%, calc(100% + 6rem));
+  /* --shape-height: 200%; */
 
 }
 
@@ -22,7 +24,7 @@ body {
 
 .bg-shape {
   position: relative;
-  margin: 2rem 0;
+  /* margin: 2rem 0; */
 }
 
 .bg-shape::before {
@@ -31,28 +33,35 @@ body {
   filter: drop-shadow(0 10px 5px rgba(0, 0, 0, 0.3));
   aspect-ratio: 10/4;
   background-size: contain;
-  height: min(200%, calc(90% + 14rem));
+  height: 120%;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
 }
 
 .bg-shape--content {
-  padding: 3rem 0;
+  padding: var(--content-margin);
   position: relative;
   z-index: 100;
+  top: 50%;
+  transform: translateY(-50%);
 }
 
 .bg-shape--left1::before {
   background: url(./assets/left-blue-1.svg) center no-repeat;
+  aspect-ratio: 100/34;
+  background-size: contain;
 }
 
 .bg-shape--left2::before {
   background: url(./assets/left-blue-2.svg) center no-repeat;
+  background-size: contain;
 }
 
 .bg-shape--right1::before {
   background: url(./assets/right-grey-1.svg) center no-repeat;
+  aspect-ratio: 100/34;
+  background-size: contain;
 }
 
 .bg-shape--right2::before {
@@ -66,11 +75,5 @@ body {
   aspect-ratio: 5/1;
   left: 35%;
   transform: translate(-65%, -50%);
+  background-size: contain;
 }
-
-/* media query to check if screen is in portrait mode */
-/* @media (orientation: portrait) {
-  .bg-shape::before {
-    height: clamp(126%, 46vh, 200%);
-  }
-} */
