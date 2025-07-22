@@ -1,12 +1,5 @@
 :root {
-  --primary: #f06d06;
-  --secondary: #f0f0f0;
-  --tertiary: #f0f0f0;
-  --quaternary: #f0f0f0;
-
-  --offset: -13rem;
-
-
+  --size: 14rem;
 }
 
 * {
@@ -31,10 +24,11 @@ body {
   filter: drop-shadow(0 10px 5px rgba(0, 0, 0, 0.3));
   aspect-ratio: 10/4;
   background-size: contain;
-  height: min(200%, calc(90% + 14rem));
+  height: min(200%, calc(100% + 12rem));
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  outline: 1px solid darkgray;
 }
 
 .bg-shape--content {
@@ -45,14 +39,19 @@ body {
 
 .bg-shape--left1::before {
   background: url(./assets/left-blue-1.svg) center no-repeat;
+  aspect-ratio: 100/34;
+  background-size: contain;
 }
 
 .bg-shape--left2::before {
   background: url(./assets/left-blue-2.svg) center no-repeat;
+  background-size: contain;
+  height: min(200%, calc(100% + 12rem))
 }
 
 .bg-shape--right1::before {
   background: url(./assets/right-grey-1.svg) center no-repeat;
+  background-size: contain;
 }
 
 .bg-shape--right2::before {
@@ -64,6 +63,7 @@ body {
 .bg-shape--title::before {
   background: url(./assets/left-title.svg) center no-repeat;
   aspect-ratio: 5/1;
+  background-size: contain;
   left: 35%;
   transform: translate(-65%, -50%);
 }
