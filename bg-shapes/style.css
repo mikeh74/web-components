@@ -1,4 +1,5 @@
 :root {
+<<<<<<< HEAD
   --primary: #f06d06;
   --secondary: #f0f0f0;
   --tertiary: #f0f0f0;
@@ -9,6 +10,9 @@
   --shape-height: min(200%, calc(100% + 6rem));
   /* --shape-height: 200%; */
 
+=======
+  --size: 14rem;
+>>>>>>> 36fcc8774736057f9e46ad61ffd542bf01f23d1a
 }
 
 * {
@@ -33,10 +37,11 @@ body {
   filter: drop-shadow(0 10px 5px rgba(0, 0, 0, 0.3));
   aspect-ratio: 10/4;
   background-size: contain;
-  height: 120%;
+  height: min(200%, calc(100% + 12rem));
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  outline: 1px solid darkgray;
 }
 
 .bg-shape--content {
@@ -56,11 +61,18 @@ body {
 .bg-shape--left2::before {
   background: url(./assets/left-blue-2.svg) center no-repeat;
   background-size: contain;
+<<<<<<< HEAD
+=======
+  height: min(200%, calc(100% + 12rem))
+>>>>>>> 36fcc8774736057f9e46ad61ffd542bf01f23d1a
 }
 
 .bg-shape--right1::before {
   background: url(./assets/right-grey-1.svg) center no-repeat;
+<<<<<<< HEAD
   aspect-ratio: 100/34;
+=======
+>>>>>>> 36fcc8774736057f9e46ad61ffd542bf01f23d1a
   background-size: contain;
 }
 
@@ -73,6 +85,7 @@ body {
 .bg-shape--title::before {
   background: url(./assets/left-title.svg) center no-repeat;
   aspect-ratio: 5/1;
+  background-size: contain;
   left: 35%;
   transform: translate(-65%, -50%);
   background-size: contain;
