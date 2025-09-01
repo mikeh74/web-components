@@ -1,0 +1,26 @@
+ol {
+    counter-reset: card;
+}
+
+ol .number-circle {
+    counter-increment: card;
+    position: relative;
+}
+
+ol .number-circle::before {
+    content: counter(card) "";
+}
+
+.number-circle {
+    width: 2.5rem;
+    height: 2.5rem;
+    background-color: #245c97;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 1.2em;
+    line-height: 1;
+}
