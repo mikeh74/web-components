@@ -3,13 +3,13 @@
     margin: 0;
 }
 
-/* .hoz-card {
+.hoz-card {
     container-name: hoz-card;
     container-type: inline-size;
-} */
+}
 
 /* Container query for .card-horizontal when container > 576px */
-/* @container hoz-card (min-width: 768px) {
+/* @container hoz-card (min-width: 150px) {
 
     .card-horizontal::after {
         display: grid;
