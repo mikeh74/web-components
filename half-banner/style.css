@@ -6,6 +6,7 @@
 
 .half-banner {
     position: relative;
+    min-height: 500px;
     background: linear-gradient(
         to right,
         rgb(15, 15, 75) 0%,

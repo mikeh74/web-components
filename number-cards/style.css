@@ -1,17 +1,16 @@
-ol {
-    counter-reset: card;
+.counter {
+    counter-reset: counter;
 }
 
-ol .number-circle {
-    counter-increment: card;
-    position: relative;
+.counter .counter-number {
+    counter-increment: counter;
 }
 
-ol .number-circle::before {
-    content: counter(card) "";
+.counter .counter-number::before {
+    content: counter(counter) "";
 }
 
-.number-circle {
+.counter-number {
     width: 2.5rem;
     height: 2.5rem;
     background-color: #245c97;
