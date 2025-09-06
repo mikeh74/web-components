@@ -14,7 +14,6 @@
 }
 
 @media screen and (min-width: 992px) {
-
     .card-horizontal {
         display: grid;
         grid-template-columns: 1fr 1fr;
@@ -26,28 +25,23 @@
         height: 100%;
         object-fit: cover;
     }
-
-    .card-horizontal .right-frame {
-        order: 2;
-    }
-
-    .card-horizontal .left-frame {
-        order: 1;
-    }
-
 }
 
-.horizontal-card-container {
-    container-name: horizontal-card;
-    container-type: inline-size;
-}
 
-/* Container query for .card-horizontal when container > 576px */
-@container horizontal-card (min-width: 400px) {
+@supports (container-type: inline-size) {
 
-    .horizontal-card {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
+    .card-horizontal-container {
+        container-name: horizontal-card;
+        container-type: inline-size;
+    }
+
+    /* Container query for .card-horizontal when container > 470px */
+    @container horizontal-card (min-width: 470px) {
+        .card-horizontal {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+        }
+
         .card-img-wrapper .card-img {
             position: absolute;
             width: 100%;
@@ -55,6 +49,4 @@
             object-fit: cover;
         }
     }
-
 }
-
