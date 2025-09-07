@@ -31,12 +31,12 @@
 @supports (container-type: inline-size) {
 
     .card-horizontal-container {
-        container-name: horizontal-card;
+        container-name: card-horizontal;
         container-type: inline-size;
     }
 
     /* Container query for .card-horizontal when container > 470px */
-    @container horizontal-card (min-width: 470px) {
+    @container card-horizontal (min-width: 470px) {
         .card-horizontal {
             display: grid;
             grid-template-columns: 1fr 1fr;
