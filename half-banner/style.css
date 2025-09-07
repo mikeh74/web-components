@@ -1,12 +1,10 @@
-/* 
-:root {
-    --img-banner: url('placeholder-4x3.svg');
-}
- */
 
-.half-banner {
+/* Split banner content */
+.split-banner {
     position: relative;
-    min-height: 500px;
+    width: 100%;
+
+    min-height: 300px;
     background: linear-gradient(
         to right,
         rgb(15, 15, 75) 0%,
@@ -17,24 +15,19 @@
 
     color: white;
     padding: 20px;
-    text-align: center;
-    overflow: hidden;
 }
 
-.half-banner::before {
-    content: "";
+.split-banner-figure {
     position: absolute;
     top: 0;
     right: 0;
     width: 50%;
     height: 100%;
-    background: var(--img-banner) no-repeat center center;
-    background-size: cover;
     z-index: -1;
-    pointer-events: none;
 }
 
-/* .half-banner > * {
-    position: relative;
-    z-index: 2;
-} */
+.split-banner-figure-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
